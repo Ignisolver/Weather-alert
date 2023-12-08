@@ -27,6 +27,7 @@ def create_alerts_tabele(air_alerts: AirAlerts, weather_alerts:WeatherAlerts):
         "WindAlert",
         "RainAlert",
     )]
+
     for location, air_alert in air_alerts.items():
         weather_alert = weather_alerts[location]
         location_row = (location.lat, location.lon,
