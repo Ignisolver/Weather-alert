@@ -1,6 +1,6 @@
 from air_pollution_api import get_air_alerts_for_locations
 from users_api import get_users_locations
-from utils import create_alerts_tabele
+from utils import create_alerts_tabele, save_to_s3
 from weather_api import get_weather_alerts_for_locations
 
 
@@ -15,4 +15,3 @@ def main():
 if __name__ == '__main__':
     tabele = main()
     print(*tabele, sep='\n')
-

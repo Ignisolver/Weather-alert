@@ -1,7 +1,30 @@
 import requests
+import boto3
 from requests import Response
 
 from constans import AirAlerts, WeatherAlerts
+
+def save_to_s3(
+    bucket,
+    key,
+    data,
+    region_name=None,
+    aws_access_key_id=None,
+    aws_secret_access_key=None,
+    aws_session_token=None,
+):
+    client = boto3.client(
+        's3',
+        region_name=region_name,
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key,
+        aws_session_token=aws_session_token,
+    )
+    client.put_object(
+        Body=data,
+        Bucket=bucket,
+        Key=key,
+    )
 
 
 def send_request(url: str):
