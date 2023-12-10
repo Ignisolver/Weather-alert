@@ -1,0 +1,43 @@
+# TODO resolve problems and make it work
+
+Parameters:
+  SubnetIds:
+    Description: A comma-separated list of subnets to deploy Kubernetes nodes
+    Type: String
+    Default: subnet-00b11c9db587ef089,subnet-0b5c4a0614a3a8998
+  
+  DataS3BucketName:
+    Type: String
+    Description: Name for an S3 bucket to be created for processed data
+    Default: data-adzd
+
+  LabRole:
+    Type: String
+    Default: arn:aws:iam::368065926476:role/LabRole
+
+Resources:
+  KubernetesControlPlane:
+    Type: "AWS::EKS::Cluster"
+    DeletionPolicy: Delete
+    Properties:
+      Name: adzd-kubernetes-cluster
+      RoleArn: !Ref LabRole
+      ResourcesVpcConfig:
+        SubnetIds: !Split [ ",", !Ref SubnetIds]
+  
+  KubernetesNodeGroup:
+    Type: "AWS::EKS::Nodegroup"
+    DeletionPolicy: Delete
+    DependsOn: KubernetesControlPlane
+    Properties:
+      ClusterName: !GetAtt KubernetesControlPlane.Name
+      NodeRole: !Ref LabRole
+      Subnets: !Split [ ",", !Ref SubnetIds]
+
+  DataS3Bucket:
+    Type: "AWS::S3::Bucket"
+    DeletionPolicy: Delete
+    Properties:
+      BucketName: !Ref DataS3BucketName
+      VersioningConfiguration:
+        Status: Enabled
