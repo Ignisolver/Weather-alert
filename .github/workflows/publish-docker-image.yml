@@ -2,7 +2,7 @@ name: Publish Docker image
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   push_to_registry:
@@ -21,6 +21,6 @@ jobs:
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
-          context: ./deploy
+          context: .
           push: true
-          tags: makarepio/weather-alert-airflow-image:latest
+          tags: makarepio/weather-alert-airflow:latest

@@ -3,7 +3,6 @@ Parameters:
     Description: A comma-separated list of subnets to deploy Kubernetes nodes
     Type: String
     Default: subnet-00b11c9db587ef089,subnet-0b5c4a0614a3a8998
-  
   DataS3BucketName:
     Type: String
     Description: Name for an S3 bucket to be created for processed data
@@ -28,10 +27,10 @@ Resources:
       Subnets: !Split [ ",", !Ref SubnetIds]
       ScalingConfig:
         DesiredSize: 1
-        MaxSize: 1
+        MaxSize: 3
         MinSize: 1
       InstanceTypes: 
-        - t3.small
+        - t3.large
 
   DataS3Bucket:
     Type: "AWS::S3::Bucket"
