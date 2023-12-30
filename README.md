@@ -50,6 +50,7 @@ helm upgrade --install airflow apache-airflow/airflow \
   --namespace airflow --create-namespace \
   --set defaultAirflowRepository=makarepio/weather-alert-airflow \
   --set defaultAirflowTag=latest \
+  --set images.airflow.pullPolicy=Always \
   --set webserver.defaultUser.password=admin
 ```
 
@@ -66,3 +67,20 @@ kubectl -n airflow port-forward pods/<webserver-pod-name> 8080:8080
 ```
 
 11. Enter http://localhost:8080. You should be able to access Airflow UI with username `admin` and password `admin`.
+
+
+## Useful commands
+
+Forcefully shut down an Airflow release:
+```bash
+kubectl -n airflow delete deployment --all --grace-period=0 --force
+kubectl -n airflow delete statefulset --all --grace-period=0 --force
+kubectl -n airflow delete pod --all --grace-period=0 --force
+kubectl -n airflow delete pvc --all
+kubectl -n airflow delete pv --all
+```
+
+Enter pod shell:
+```bash 
+kubectl -n airflow exec -it <pod-name> -- bash
+```
