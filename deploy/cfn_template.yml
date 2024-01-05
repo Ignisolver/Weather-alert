@@ -30,7 +30,7 @@ Resources:
         MaxSize: 3
         MinSize: 1
       InstanceTypes: 
-        - t3.large
+        - t3.medium
 
   DataS3Bucket:
     Type: "AWS::S3::Bucket"
