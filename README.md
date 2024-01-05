@@ -44,6 +44,9 @@ aws eks create-addon --cluster-name adzd-kubernetes-cluster --addon-name aws-ebs
 
 8. Install Apache Airflow Helm chart on the cluster, using the deployed Docker image `makarepio/weather-alert-airflow:latest`.
 
+
+Remember to set values for API keys.
+
 ```bash
 helm repo add apache-airflow https://airflow.apache.org
 helm upgrade --install airflow apache-airflow/airflow \
@@ -51,7 +54,13 @@ helm upgrade --install airflow apache-airflow/airflow \
   --set defaultAirflowRepository=makarepio/weather-alert-airflow \
   --set defaultAirflowTag=latest \
   --set images.airflow.pullPolicy=Always \
-  --set webserver.defaultUser.password=admin
+  --set webserver.defaultUser.password=admin \
+  --set env[0].name=API_KEY_OPENWEATHERMAP \
+  --set env[0].value=??? \
+  --set env[1].name=API_KEY_SHEETS \
+  --set env[1].value=??? \
+  --set webserver.resources.limits.cpu=1 \
+  --set webserver.resources.limits.memory=1Gi
 ```
 
 9. In a separate terminal, observe the deployment process with:
