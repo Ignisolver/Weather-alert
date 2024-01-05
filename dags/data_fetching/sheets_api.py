@@ -13,6 +13,8 @@ def extract_users(response) -> List[User]:
 
 def get_users():
     response = requests.get(API_URL_SHEETS, params={"key": API_KEY_SHEETS})
+    if response.status_code != 200:
+        print(f"Error on a call to {API_URL_SHEETS}. HTTP status code: {response.status_code}. Response: {response.json()}")
     records = extract_users(response)
     return records
 

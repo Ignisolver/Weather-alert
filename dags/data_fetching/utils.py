@@ -29,7 +29,7 @@ def save_to_s3(
 def request_to_openweathermap(url: str, location: Location):
     r = requests.get(url, params={"lat": location.lat, "lon": location.lon, "key": API_KEY_OPENWEATHERMAP})
     if r.status_code != 200:
-        print(f"Error on a call to {url} for location {location}. HTTP status code: {r.status_code}")
+        print(f"Error on a call to {url} for location {location}. HTTP status code: {r.status_code}. Response: {r.json()}")
     return r
 
 
