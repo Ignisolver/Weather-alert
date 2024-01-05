@@ -1,17 +1,16 @@
-from air_pollution_api import get_air_alerts_for_locations
-from users_api import get_users_locations
-from utils import create_alerts_tabele, save_to_s3
-from weather_api import get_weather_alerts_for_locations
+from air_pollution_api import get_air_alerts
+from sheets_api import get_user_locations
+from utils import create_alerts_table
+from weather_api import get_weather_alerts
 
 
 def main():
-    locations = get_users_locations()
-    air_alerts = get_air_alerts_for_locations(locations)
-    weather_alerts = get_weather_alerts_for_locations(locations)
-    tabele = create_alerts_tabele(air_alerts, weather_alerts)
-    return tabele
+    locations = get_user_locations()
+    air_alerts = get_air_alerts(locations)
+    weather_alerts = get_weather_alerts(locations)
+    table = create_alerts_table(air_alerts, weather_alerts)
+    print(*table, sep='\n')
 
 
 if __name__ == '__main__':
-    tabele = main()
-    print(*tabele, sep='\n')
+    main()

@@ -1,8 +1,7 @@
-import requests
 import boto3
-from requests import Response
-
-from constans import AirAlerts, WeatherAlerts
+import requests
+from constants import API_KEY_OPENWEATHERMAP
+from model import Location, AirAlerts, WeatherAlerts
 
 def save_to_s3(
     bucket,
@@ -27,34 +26,24 @@ def save_to_s3(
     )
 
 
-def send_request(url: str):
-    resp = requests.get(url=url)
-    return resp
+def request_to_openweathermap(url: str, location: Location):
+    r = requests.get(url, params={"lat": location.lat, "lon": location.lon, "key": API_KEY_OPENWEATHERMAP})
+    if r.status_code != 200:
+        print(f"Error on a call to {url} for location {location}. HTTP status code: {r.status_code}")
+    return r
 
 
-def is_response_correct(response: Response):
-    if response.status_code != 200:
-        return False
-    return True
-
-
-def get_list_from_response(response: Response):
-    return response.json()["list"]
-
-
-def create_alerts_tabele(air_alerts: AirAlerts, weather_alerts:WeatherAlerts):
-    alerts_tabele = [(
-        "LocationLatitude",
-        "LocationLongitude",
-        "AirAlert",
-        "WindAlert",
-        "RainAlert",
+def create_alerts_table(air_alerts: AirAlerts, weather_alerts: WeatherAlerts):
+    alerts_table = [(
+        "Latitude",
+        "Longitude",
+        "IsAirAlert",
+        "IsWindAlert",
+        "IsRainAlert",
     )]
 
     for location, air_alert in air_alerts.items():
         weather_alert = weather_alerts[location]
-        location_row = (location.lat, location.lon,
-                        air_alert, weather_alert.wind,
-                        weather_alert.rain)
-        alerts_tabele.append(location_row)
-    return alerts_tabele
+        row = (location.lat, location.lon, air_alert, weather_alert.wind, weather_alert.rain)
+        alerts_table.append(row)
+    return alerts_table
