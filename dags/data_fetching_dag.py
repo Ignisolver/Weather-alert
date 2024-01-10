@@ -13,6 +13,7 @@ with DAG(
         dag_id="data_fetching_dag",
         start_date=datetime(2023, 1, 10),
         schedule="5 * * * *",  # run every five minutes
+        catchup=False
 ):
     @task
     def get_users_task():
