@@ -9,3 +9,13 @@ API_URL_SHEETS = f"https://sheets.googleapis.com/v4/spreadsheets/{SHEET_ID}/valu
 
 API_URL_WEATHER = "https://api.openweathermap.org/data/2.5/forecast"
 API_URL_POLLUTION = "http://api.openweathermap.org/data/2.5/air_pollution/forecast"
+
+LOCATIONS_FILE_NAME = "locations.csv"
+WEATHER_ALERTS_FILE_NAME = "weathers_alerts.csv"
+AIR_ALERTS_FILE_NAME = "air_alerts.csv"
+
+USERNAME = "Username"
+LOCATION_LAT = "LocationLat"
+LOCATION_LON = "LocationLon"
+WEATHER_ALARM = "WeatherAlarm"
+AIR_ALARM = "AirAlarm"
