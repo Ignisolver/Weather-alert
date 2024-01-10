@@ -12,7 +12,7 @@ from dags.data_fetching.utils import write_df_to_s3, read_from_s3, print_alerts,
 with DAG(
         dag_id="data_fetching_dag",
         start_date=datetime(2023, 1, 10),
-        schedule="5 * * * *",  # run every five minutes
+        schedule="@daily",  # run every five minutes
         catchup=False
 ):
     @task
