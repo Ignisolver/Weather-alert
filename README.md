@@ -76,10 +76,10 @@ helm upgrade --install airflow apache-airflow/airflow \
 watch kubectl get pods -n airflow
 ```
 
-10. When all the pods are ready, set up port forwarding to `airflow-webserver` pod.
+10. When all the pods are ready, set up port forwarding to `airflow-webserver` service.
 
 ```bash
-kubectl -n airflow port-forward pods/<webserver-pod-name> 8080:8080
+kubectl port-forward -n airflow svc/airflow-webserver 8080:8080
 ```
 
 11. Enter http://localhost:8080. You should be able to access Airflow UI with username `admin` and password `admin`.
