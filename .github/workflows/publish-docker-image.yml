@@ -23,4 +23,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: makarepio/weather-alert-airflow:latest
+          tags: makarepio/weather-alert-airflow:latest,makarepio/weather-alert-airflow:$(git rev-parse --short "$GITHUB_SHA")
+
