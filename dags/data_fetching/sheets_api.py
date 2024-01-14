@@ -1,6 +1,6 @@
 from typing import List
 from constants import API_KEY_SHEETS, API_URL_SHEETS
-from dags.data_fetching.constants import USERNAME, LOCATION_LAT, LOCATION_LON
+from data_fetching.constants import USERNAME, LOCATION_LAT, LOCATION_LON
 from model import Location, User
 import requests
 import pandas as pd

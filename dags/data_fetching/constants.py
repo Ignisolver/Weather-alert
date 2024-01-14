@@ -19,3 +19,5 @@ LOCATION_LAT = "LocationLat"
 LOCATION_LON = "LocationLon"
 WEATHER_ALARM = "WeatherAlarm"
 AIR_ALARM = "AirAlarm"
+
+DEFAULT_BUCKET = "data-adzd"

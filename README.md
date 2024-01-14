@@ -2,7 +2,7 @@
 
 ## How to deploy?
 
-0. Make sure you have `aws-cli`, `kubectl` and `helm` installed and accessible from the command line.
+0. Make sure you have `aws-cli`, `kubectl`, `eksctl` and `helm` installed and accessible from the command line.
 
 1. Make sure you have AWS credentials properly configured. You should fill in the following values in `~/.aws/credentials`:
 ```
@@ -36,10 +36,11 @@ NAME                            STATUS   ROLES    AGE   VERSION
 ip-172-31-77-183.ec2.internal   Ready    <none>   37m   v1.28.3-eks-e71965b
 ```
 
-7. Install an EKS add-on for dynamic volume provisioning.
+7. Install an EKS add-on for dynamic volume provisioning and Kubernetes Metrics Server.
 
 ```bash
 aws eks create-addon --cluster-name adzd-kubernetes-cluster --addon-name aws-ebs-csi-driver
+kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 ```
 
 8. Install Apache Airflow Helm chart on the cluster, using the deployed Docker image `makarepio/weather-alert-airflow:latest`.
@@ -59,6 +60,12 @@ helm upgrade --install airflow apache-airflow/airflow \
   --set env[0].value=??? \
   --set env[1].name=API_KEY_SHEETS \
   --set env[1].value=??? \
+  --set env[2].name=AWS_ACCESS_KEY_ID \
+  --set env[2].value=??? \
+  --set env[3].name=AWS_SECRET_ACCESS_KEY \
+  --set env[3].value=??? \
+  --set env[4].name=AWS_SESSION_TOKEN \
+  --set env[4].value=??? \
   --set webserver.resources.limits.cpu=1 \
   --set webserver.resources.limits.memory=1Gi
 ```

@@ -4,9 +4,9 @@ import pandas as pd
 
 from pandas import DataFrame
 from io import BytesIO
-from constants import API_KEY_OPENWEATHERMAP
-from dags.data_fetching.air_pollution_api import is_air_quality_alert
-from dags.data_fetching.constants import AIR_ALARM, WEATHER_ALARM, API_URL_WEATHER, API_URL_POLLUTION, LOCATION_LON, \
+from constants import API_KEY_OPENWEATHERMAP, DEFAULT_BUCKET
+from data_fetching.air_pollution_api import is_air_quality_alert
+from data_fetching.constants import AIR_ALARM, WEATHER_ALARM, API_URL_WEATHER, API_URL_POLLUTION, LOCATION_LON, \
     LOCATION_LAT, USERNAME
 from dags.data_fetching.weather_api import to_weather_alert
 from model import AirAlerts, WeatherAlerts
@@ -74,11 +74,11 @@ def create_alerts_table(air_alerts: AirAlerts, weather_alerts: WeatherAlerts):
     return alerts_table
 
 
-def write_df_to_s3(df, filename, **kwargs):
+def write_df_to_s3(df, filename, bucket=DEFAULT_BUCKET, **kwargs):
     csv_string = df.to_csv(index=False)
     save_to_s3(bucket=bucket, data=csv_string, key=filename, **kwargs)
 
-def read_df_from_s3(bucket, filename, **kwargs):
+def read_df_from_s3(filename, bucket=DEFAULT_BUCKET, **kwargs):
     response = read_from_s3(bucket=bucket, key=filename)
     data = response['Body'].read()
     return pd.read_csv(BytesIO(data))
