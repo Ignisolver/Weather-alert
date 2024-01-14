@@ -1,6 +1,6 @@
 from data_fetching.constants import AIR_ALARM, WEATHER_ALARM
 from data_fetching.utils import print_alerts, get_alerts, write_df_to_s3, read_from_s3
-from sheets_api import get_user_locations
+from data_fetching.sheets_api import get_user_locations
 
 
 def main():

@@ -1,7 +1,7 @@
 from typing import List
-from constants import API_KEY_SHEETS, API_URL_SHEETS
+from data_fetching.constants import API_KEY_SHEETS, API_URL_SHEETS
 from data_fetching.constants import USERNAME, LOCATION_LAT, LOCATION_LON
-from model import Location, User
+from data_fetching.model import Location, User
 import requests
 import pandas as pd
 
