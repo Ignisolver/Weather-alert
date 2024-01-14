@@ -54,7 +54,7 @@ def read_from_s3(
 def request_to_openweathermap(url: str, location_lat, location_lon):
     r = requests.get(url, params={"lat": location_lat, "lon": location_lon, "appid": API_KEY_OPENWEATHERMAP, 'cnt':'8'})
     if r.status_code != 200:
-        print(f"Error on a call to {url} for location {location_lat, location_lon}. HTTP status code: {r.status_code}. Response: {r.json()}")
+        raise Exception(f"Error on a call to {url} for location {location_lat, location_lon}. HTTP status code: {r.status_code}. Response: {r.json()}")
     return r
 
 
