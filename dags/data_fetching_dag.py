@@ -36,5 +36,5 @@ with DAG(
         air_alerts = read_from_s3(filename="air_alerts.csv")
         print_alerts(weather_alerts, air_alerts)
 
-    get_users_task >> [get_air_pollution_alerts_task, get_weather_alerts_task] >> print_alerts_task
+    get_users_task() >> [get_air_pollution_alerts_task(), get_weather_alerts_task()] >> print_alerts_task()
 
